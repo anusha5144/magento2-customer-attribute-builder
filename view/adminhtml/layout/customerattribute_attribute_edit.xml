@@ -6,7 +6,7 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="MiniOrange\CustomerAttributeBuilder\Block\Adminhtml\Attribute\Edit" name="customerattribute_attribute_edit" template="MiniOrange_CustomerAttributeBuilder::attribute/customer_attribute_edit.phtml"/>
+            <block class="MiniOrange\CustomerAttributeBuilder\Block\Adminhtml\AttributeFormBuilder" name="customerattribute_attribute_edit" template="MiniOrange_CustomerAttributeBuilder::attribute/customer_attribute_edit.phtml"/>
         </referenceContainer>
     </body>
 </page> 

@@ -53,6 +53,9 @@ class CustomerAttributeFetchHandler extends Action
                         case 'sort_order':
                             $attributes->addFieldToFilter($field, ['like' => '%' . $value . '%']);
                             break;
+                        case 'store_info':
+                            // This will be filtered after fetching the data
+                            break;
                     }
                 }
             }
@@ -67,7 +70,19 @@ class CustomerAttributeFetchHandler extends Action
                     $data['used_in_forms'] = $fullAttribute->getUsedInForms();
                 }
 
+                // Get store information
+                $data['store_info'] = $this->getStoreInformation($fullAttribute);
+
                 $attributeData[] = $data;
+            }
+
+            // Post-filter by store_info if specified
+            if (isset($filters['store_info']) && !empty($filters['store_info'])) {
+                $storeFilter = strtolower($filters['store_info']);
+                $attributeData = array_filter($attributeData, function($attr) use ($storeFilter) {
+                    return strpos(strtolower($attr['store_info']), $storeFilter) !== false;
+                });
+                $attributeData = array_values($attributeData); // Re-index array
             }
 
             $response['success'] = true;
@@ -78,6 +93,40 @@ class CustomerAttributeFetchHandler extends Action
         }
 
         return $result->setData($response);
+    }
+
+    protected function getStoreInformation($attribute)
+    {
+        $storeInfo = [];
+        
+        // Get the global scope setting
+        $global = $attribute->getGlobal();
+        
+        if ($global == \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL) {
+            $storeInfo[] = 'All Store Views';
+        } else {
+            // Get store-specific labels from eav_attribute_label table
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $resource = $objectManager->get(\Magento\Framework\App\ResourceConnection::class);
+            $connection = $resource->getConnection();
+            
+            $storeLabels = $connection->fetchAll(
+                $connection->select()
+                    ->from(['eal' => $connection->getTableName('eav_attribute_label')], ['store_id'])
+                    ->join(['s' => $connection->getTableName('store')], 'eal.store_id = s.store_id', ['name'])
+                    ->where('eal.attribute_id = ?', $attribute->getId())
+            );
+            
+            foreach ($storeLabels as $storeLabel) {
+                $storeInfo[] = $storeLabel['name'];
+            }
+            
+            if (empty($storeInfo)) {
+                $storeInfo[] = 'Default Store View';
+            }
+        }
+        
+        return implode(', ', $storeInfo);
     }
     
 }

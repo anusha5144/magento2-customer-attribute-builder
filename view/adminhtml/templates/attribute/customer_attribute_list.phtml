@@ -39,6 +39,7 @@
             <th scope="col" class="col-required">Required Input</th>
             <th scope="col" class="col-system">System</th>
             <th scope="col" class="col-visible">Display on Frontend</th>
+            <th scope="col" class="col-store">Store Views</th>
             <th scope="col" class="col-sorting">Display Order</th>
             <th scope="col" class="col-action">Action</th>
         </tr>
@@ -66,6 +67,7 @@
                     <option value="0">No</option>
                 </select>
             </td>
+            <td><input type="text" class="admin__control-text filter-input" data-filter="store_info"></td>
             <td><input type="text" class="admin__control-text filter-input" data-filter="sort_order"></td>
             <td></td>
         </tr>
@@ -76,7 +78,7 @@
 
 <script>
     window.customerAttributeUrls = {
-        new: '<?= $block->getUrl('customerattribute/attribute/new') ?>',
+        new: '<?= $block->getUrl('customerattribute/attribute/attributeformhandler') ?>',
         edit: '<?= $block->getUrl('customerattribute/attribute/edit') ?>',
         fetch: '<?= $block->getUrl('customerattribute/attribute/customerattributefetchhandler') ?>'
     };

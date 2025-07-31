@@ -1,6 +1,6 @@
 <?php
 
-namespace MiniOrange\CustomerAttributeBuilder\Block\Adminhtml\Attribute;
+namespace MiniOrange\CustomerAttributeBuilder\Block\Adminhtml;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
@@ -8,7 +8,7 @@ use Magento\Framework\Registry;
 use Magento\Customer\Model\AttributeFactory as CustomerAttributeFactory;
 use Magento\Framework\App\ResourceConnection;
 
-class Edit extends Template
+class AttributeFormBuilder extends Template
 {
     protected $_storeManager;
     protected $registry;
@@ -129,4 +129,4 @@ class Edit extends Template
                 return 'text';
         }
     }
-}
+} 

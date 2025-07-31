@@ -4,7 +4,7 @@ namespace MiniOrange\CustomerAttributeBuilder\Controller\Adminhtml\Attribute;
 use Magento\Backend\App\Action;
 use Magento\Framework\View\Result\PageFactory;
 
-class NewAction extends Action
+class AttributeFormHandler extends Action
 {
     protected $resultPageFactory;
 

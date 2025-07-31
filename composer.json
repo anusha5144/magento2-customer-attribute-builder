@@ -32,6 +32,12 @@
     "support": {
       "email": "magentosupport@xecurify.com"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/anusha5144/magento2-customer-attribute-builder"
+        }
+    ],
     "require": {
       "php": "~8"
     }

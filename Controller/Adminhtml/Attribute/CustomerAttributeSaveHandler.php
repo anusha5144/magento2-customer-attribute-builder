@@ -77,11 +77,28 @@ class CustomerAttributeSaveHandler extends Action
                 // Map custom input types to Magento standard types
                 $magentoInputType = $this->mapInputTypeToMagento($inputType);
                 
-                // Check if attribute already exists
-                $existingAttribute = $this->eavConfig->getAttribute(Customer::ENTITY, $attributeCode);
+                // Check if attribute already exists by querying the database directly
+                $connection = $this->resource->getConnection();
+                $attributeTable = $connection->getTableName('eav_attribute');
+                $entityTypeTable = $connection->getTableName('eav_entity_type');
                 
-                if ($existingAttribute && $existingAttribute->getId()) {
+                $existingAttributeId = $connection->fetchOne(
+                    $connection->select()
+                        ->from(['ea' => $attributeTable], ['attribute_id'])
+                        ->join(['eet' => $entityTypeTable], 'ea.entity_type_id = eet.entity_type_id')
+                        ->where('ea.attribute_code = ?', $attributeCode)
+                        ->where('eet.entity_type_code = ?', 'customer')
+                );
+                
+                if ($existingAttributeId) {
+                    // Check if this is a new attribute creation (no attribute_id in post data)
+                    if (!isset($postData['attribute_id']) || empty($postData['attribute_id'])) {
+                        $response['message'] = 'Attribute with the same code already exists.';
+                        return $this->jsonFactory->create()->setData($response);
+                    }
+                    
                     // Update existing attribute
+                    $existingAttribute = $this->eavConfig->getAttribute(Customer::ENTITY, $attributeCode);
                     $attribute = $existingAttribute;
                     $attribute->addData([
                         'label' => $label,
@@ -175,6 +192,7 @@ class CustomerAttributeSaveHandler extends Action
                 $response['success'] = true;
                 $response['message'] = 'Attribute saved successfully!';
                 $response['post_data'] = $postData;
+                $response['post_data']['attribute_id'] = $attribute->getId();
 
             } catch (\Exception $e) {
                 $response['message'] = $e->getMessage();

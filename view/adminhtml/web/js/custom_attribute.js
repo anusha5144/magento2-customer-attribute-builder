@@ -12,7 +12,7 @@ require(['jquery', 'domReady!'], function ($) {
         tbody.empty();
 
         if (visibleAttributes.length === 0) {
-            tbody.append('<tr><td colspan="7" style="text-align:center;">No attributes found.</td></tr>');
+            tbody.append('<tr><td colspan="8" style="text-align:center;">No attributes found.</td></tr>');
         } else {
             visibleAttributes.forEach(function (attr) {
                 if (attr && attr.attribute_id) {
@@ -23,6 +23,7 @@ require(['jquery', 'domReady!'], function ($) {
                             <td>${attr.is_required == 1 ? 'Yes' : 'No'}</td>
                             <td>${attr.is_system == 1 ? 'Yes' : 'No'}</td>
                             <td>${attr.is_visible == 1 ? 'Yes' : 'No'}</td>
+                            <td>${attr.store_info || ''}</td>
                             <td>${attr.sort_order || ''}</td>
                             <td>
                                 <button class="action-edit" data-id="${attr.attribute_id}" style="background: none; border: none; color: rgba(33, 72, 248, 0.93); padding: 6px 0; cursor: pointer;">Edit</button>
@@ -70,7 +71,7 @@ require(['jquery', 'domReady!'], function ($) {
     $('#search').on('click', function () {
         currentPage = 1;
         currentFilters = {};
-        const fieldMap = ['attribute_code', 'frontend_label', 'is_required', 'is_system', 'is_visible', 'sort_order'];
+        const fieldMap = ['attribute_code', 'frontend_label', 'is_required', 'is_system', 'is_visible', 'store_info', 'sort_order'];
 
         $('.filter-row input, .filter-row select').each(function (index) {
             let val = $(this).val();
@@ -123,6 +124,7 @@ require(['jquery', 'domReady!'], function ($) {
 
         var postData = {
             form_key: $('#form_key').val(),
+            attribute_id: $('#attribute_id').val(),
             default_label: $('#default_label').val(),
             attribute_code: $('#attribute_code').val(),
             store_view: $('#store_view').val(),
@@ -169,6 +171,7 @@ require(['jquery', 'domReady!'], function ($) {
         
         var postData = {
             form_key: $('#form_key').val(),
+            attribute_id: $('#attribute_id').val(),
             default_label: $('#default_label').val(),
             attribute_code: $('#attribute_code').val(),
             store_view: $('#store_view').val(),
@@ -191,6 +194,7 @@ require(['jquery', 'domReady!'], function ($) {
                 if (response.success) {
                     alert(response.message);
                     const d = response.post_data;
+                    $('#attribute_id').val(d.attribute_id);
                     $('#default_label').val(d.default_label);
                     $('#attribute_code').val(d.attribute_code);
                     $('#store_view').val(d.store_view);

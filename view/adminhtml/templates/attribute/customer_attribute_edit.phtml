@@ -44,6 +44,7 @@ $usedInForms = $attribute->getData('used_in_forms');
 
 <div id="add-attribute-form" style="display: block; border: 1px solid #ccc; padding: 15px; margin-left:-350px; margin-bottom: 15px; background-color: #f9f9f9;">
     <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey() ?>" />
+    <input type="hidden" name="attribute_id" id="attribute_id" value="<?= $attribute ? $attribute->getId() : '' ?>" />
     <h4>General Attribute Information</h4><hr><br>
 
     <div style="margin-bottom: 10px; display: flex;">
@@ -126,14 +127,14 @@ $inputTypes = [
     <div style="margin-bottom: 10px; display: flex;" id="dropdown_options_container" <?= $isDropdownAttribute ? '' : 'style="display: none;"' ?>>
         <label style="width: 250px;">Dropdown Options <span style="color: red;">*</span></label>
         <div style="width: 300px;">
-            <textarea name="dropdown_options" id="dropdown_options" placeholder="Enter options, one per line. Example:&#10;Option 1&#10;Option 2&#10;Option 3" rows="5" cols="50" style="width: 100%;"><?= htmlspecialchars($dropdownOptionsText) ?></textarea>
+            <textarea name="dropdown_options" id="dropdown_options" placeholder="Enter options, one per line. Example:&#10;Option 1&#10;Option 2&#10;Option 3" rows="5" cols="50" style="width: 100%;"><?= htmlspecialchars($dropdownOptionsText ?? '') ?></textarea>
             <small style="color: #666; display: block; margin-top: 5px;">Enter each option on a separate line. These will be the selectable options in the dropdown.</small>
         </div>
     </div>
     
     <div style="margin-bottom: 10px; display: flex;">
         <label style="width: 250px;">Default Value</label>
-        <input type="text" name="default_value" id="default_value" style="width: 300px;" value="<?= $attribute ? htmlspecialchars($attribute->getDefaultValue()) : '' ?>" />
+        <input type="text" name="default_value" id="default_value" style="width: 300px;" value="<?= $attribute ? htmlspecialchars($attribute->getDefaultValue() ?? '') : '' ?>" />
     </div>
 
     <?php $isRequired = $attribute->getData('is_required'); ?>

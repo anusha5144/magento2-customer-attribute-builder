@@ -4,7 +4,7 @@ namespace MiniOrange\CustomerAttributeBuilder\Block\Customer;
 use Magento\Framework\View\Element\Template;
 use MiniOrange\CustomerAttributeBuilder\Helper\Data;
 
-class CustomAttributes extends Template
+class CustomerFormAttributeBuilder extends Template
 {
     protected $helper;
 
