@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+    <menu>
+
+        <!-- Top-level Menu -->
+        <add id="MiniOrange_CustomerAttributeBuilder::main_menu"
+             title="CUSTOMER ATTRIBUTES BUILDER"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="50"
+             resource="MiniOrange_CustomerAttributeBuilder::main_menu" />
+
+        <!-- Dropdown Heading -->
+        <add id="MiniOrange_CustomerAttributeBuilder::customer_attribute"
+             title="Customer Attributes"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="10"
+             parent="MiniOrange_CustomerAttributeBuilder::main_menu"
+             resource="MiniOrange_CustomerAttributeBuilder::customer_attribute" />
+
+        <!-- Sub-items under Dropdown -->
+        <add id="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute"
+             title="Manage Customer Attribute"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="20"
+             parent="MiniOrange_CustomerAttributeBuilder::customer_attribute"
+             action="customerattribute/attribute/index"
+             resource="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute" />
+
+        <add id="MiniOrange_CustomerAttributeBuilder::attribute_upgrade"
+             title="Upgrade"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="30"
+             parent="MiniOrange_CustomerAttributeBuilder::customer_attribute"
+             action="customerattribute/upgrade/index"
+             resource="MiniOrange_CustomerAttributeBuilder::attribute_upgrade" />
+
+        <!-- Also add to Customers section -->
+        <add id="MiniOrange_CustomerAttributeBuilder::customer_attribute_customers"
+             title="Customer Attributes"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="80"
+             parent="Magento_Customer::customer"
+             resource="MiniOrange_CustomerAttributeBuilder::customer_attribute" />
+
+        <add id="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute_customers"
+             title="Manage Customer Attribute"
+             module="MiniOrange_CustomerAttributeBuilder"
+             sortOrder="10"
+             parent="MiniOrange_CustomerAttributeBuilder::customer_attribute_customers"
+             action="customerattribute/attribute/index"
+             resource="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute" />
+
+    </menu>
+</config>

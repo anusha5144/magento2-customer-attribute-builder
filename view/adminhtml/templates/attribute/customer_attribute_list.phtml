@@ -1,0 +1,86 @@
+<h1 class="page-title">Customer Attributes Builder</h1>
+
+<div class="page-main-actions">
+    <div class="page-actions">
+        <button id="add_new_attribute" class="action-primary">
+            <span>Add New Attribute</span>
+        </button>
+    </div>
+</div>
+
+<div class="filters-pagination-wrapper">
+    <div class="filters-left">
+        <button id="search" class="action-secondary">Search</button>
+        <button id="reset_filters" class="reset-filters-btn">Reset Filters</button>
+        <span id="record-count" class="record-count">Total Records: 0</span>
+    </div>
+
+    <div class="pagination-controls">
+        <select class="admin__control-select" id="per-page">
+            <option>20</option>
+            <option>30</option>
+            <option>50</option>
+            <option>100</option>
+            <option>200</option>
+        </select>
+        <label for="per-page">Per Page</label>
+
+        <button id="prev-page" class="page-nav-btn">←</button>
+        <span id="current-page-box" class="current-page">Page 1</span>
+        <button id="next-page" class="page-nav-btn">→</button>
+    </div>
+</div>
+
+<table class="data-grid" id="attribute-table">
+    <thead>
+        <tr class="data-row">
+            <th scope="col" class="col-code">Attribute Code</th>
+            <th scope="col" class="col-label">Attribute Label</th>
+            <th scope="col" class="col-required">Required Input</th>
+            <th scope="col" class="col-system">System</th>
+            <th scope="col" class="col-visible">Display on Frontend</th>
+            <th scope="col" class="col-sorting">Display Order</th>
+            <th scope="col" class="col-action">Action</th>
+        </tr>
+        <tr class="filter-row">
+            <td><input type="text" class="admin__control-text filter-input" data-filter="attribute_code"></td>
+            <td><input type="text" class="admin__control-text filter-input" data-filter="frontend_label"></td>
+            <td>
+                <select class="admin__control-select filter-select" data-filter="is_required">
+                    <option value=""></option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </td>
+            <td>
+                <select class="admin__control-select filter-select" data-filter="is_system">
+                    <option value=""></option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </td>
+            <td>
+                <select class="admin__control-select filter-select" data-filter="is_visible">
+                    <option value=""></option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </td>
+            <td><input type="text" class="admin__control-text filter-input" data-filter="sort_order"></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody id="attribute-table-body">
+    </tbody>
+</table>
+
+<script>
+    window.customerAttributeUrls = {
+        new: '<?= $block->getUrl('customerattribute/attribute/new') ?>',
+        edit: '<?= $block->getUrl('customerattribute/attribute/edit') ?>',
+        fetch: '<?= $block->getUrl('customerattribute/attribute/customerattributefetchhandler') ?>'
+    };
+</script>
+
+<script src="<?= $block->getViewFileUrl('MiniOrange_CustomerAttributeBuilder::js/custom_attribute.js') ?>"></script>
+<link rel="stylesheet" href="<?= $block->getViewFileUrl('MiniOrange_CustomerAttributeBuilder::css/custom_attribute.css') ?>" />

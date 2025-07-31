@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <!-- Top-level -->
+                <resource id="MiniOrange_CustomerAttributeBuilder::main_menu" title="Customer Attributes" sortOrder="70">
+                    <!-- Dropdown -->
+                    <resource id="MiniOrange_CustomerAttributeBuilder::customer_attribute" title="Customer Attributes" sortOrder="10">
+                        <resource id="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute" title="Manage Customer Attribute" sortOrder="20"/>
+                        <resource id="MiniOrange_CustomerAttributeBuilder::attribute_upgrade" title="Upgrade" sortOrder="30"/>
+                    </resource>
+                </resource>
+
+                <!-- Also under Customers -->
+                <resource id="MiniOrange_CustomerAttributeBuilder::customer_attribute_customers" title="Customer Attributes (under Customers)" sortOrder="80">
+                    <resource id="MiniOrange_CustomerAttributeBuilder::manage_customer_attribute_customers" title="Manage Customer Attribute" sortOrder="10"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

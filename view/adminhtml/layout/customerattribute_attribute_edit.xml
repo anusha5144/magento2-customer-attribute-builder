@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="MiniOrange_CustomerAttributeBuilder::css/custom_attribute.css"/>
+        <script src="MiniOrange_CustomerAttributeBuilder::js/custom_attribute.js"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="MiniOrange\CustomerAttributeBuilder\Block\Adminhtml\Attribute\Edit" name="customerattribute_attribute_edit" template="MiniOrange_CustomerAttributeBuilder::attribute/customer_attribute_edit.phtml"/>
+        </referenceContainer>
+    </body>
+</page> 

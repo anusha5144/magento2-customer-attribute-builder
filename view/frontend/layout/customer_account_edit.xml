@@ -1,0 +1,11 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="form.additional.info">
+            <block class="MiniOrange\CustomerAttributeBuilder\Block\Customer\CustomAttributes" name="custom.customer.attributes.edit" template="MiniOrange_CustomerAttributeBuilder::customer/custom_attributes.phtml">
+                <arguments>
+                    <argument name="form_code" xsi:type="string">customer_account_edit</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

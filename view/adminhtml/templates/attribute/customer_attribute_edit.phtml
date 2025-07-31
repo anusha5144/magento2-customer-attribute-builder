@@ -1,0 +1,173 @@
+<?php
+/** @var \MiniOrange\CustomerAttributes\Block\Adminhtml\Edit $block */
+
+$newAttributeUrl = $block->getNewAttributeUrl();
+$storeOptions = $block->getStoreOptionsHtml();
+$inputTypeHtml = $block->getInputTypeHtml();
+$attribute = $block->getAttributeData();
+
+$backUrl = $block->getUrl('customerattribute/attribute/index');
+$deleteUrl = $block->getUrl('customerattribute/attribute/customerattributedeletionhandler'); 
+$frontendInput = $attribute->getFrontendInput();
+$usedInForms = $attribute->getData('used_in_forms');
+
+?>
+
+<div style="display: flex; align-items: center; margin-left: -350px; margin-bottom: 20px; gap: 35px; background-color: #f2f2f2; padding: 20px;">
+    <a href="<?= $backUrl ?>" style="font-weight: bold; text-decoration: none; color: #000; margin-left: 780px; display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+            style="margin-right:5px; transform: rotate(180deg);" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M5.854 3.646a.5.5 0 0 0-.708.708L8.293 7H1.5a.5.5 0 0 0 0 1h6.793l-3.147 2.646a.5.5 0 0 0 .708.708l4-3.5a.5.5 0 0 0 0-.708l-4-3.5z"/>
+        </svg>
+        Back
+    </a>
+
+    <button id="submit_attribute" class="action-primary"
+        data-save-url="<?= $block->getUrl('customerattribute/attribute/customerattributesavehandler') ?>"
+        data-fetch-url="<?= $block->getUrl('customerattribute/attribute/customerattributefetchhandler') ?>"
+        data-redirect-url="<?= $block->getUrl('customerattribute/attribute/index') ?>">
+        Save
+    </button>
+    
+    <button id="save_continue_edit" class="action-primary"
+        data-save-url="<?= $block->getUrl('customerattribute/attribute/customerattributesavehandler') ?>">
+        Save and Continue Edit
+    </button>
+
+    <button id="delete_attribute" class="action-primary"
+        data-delete-url="<?= $block->getUrl('customerattribute/attribute/customerattributedeletionhandler') ?>"
+        data-redirect-url="<?= $block->getUrl('customerattribute/attribute/index') ?>">
+        Delete
+    </button>
+</div>
+
+
+<div id="add-attribute-form" style="display: block; border: 1px solid #ccc; padding: 15px; margin-left:-350px; margin-bottom: 15px; background-color: #f9f9f9;">
+    <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey() ?>" />
+    <h4>General Attribute Information</h4><hr><br>
+
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Attribute Label <span style="color: red;">*</span></label>
+        <input type="text" name="default_label" id="default_label" style="width: 300px;" value="<?= $attribute ? $attribute->getFrontendLabel() : '' ?>" />
+    </div>
+
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Attribute Code <span style="color: red;">*</span></label>
+        <input type="text" name="attribute_code" id="attribute_code"  style="width: 300px;" value="<?= $attribute ? $attribute->getAttributeCode() : '' ?>" />
+    </div>
+
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Select Applicable Store Views <span style="color: red;">*</span></label>
+        <select name="store_view" id="store_view" style="width: 300px;">
+            <?= $storeOptions ?>
+        </select>
+    </div>
+
+    <?php
+$inputOptions = [
+    'text' => 'Text Field',
+    'textarea' => 'Text Area',
+    'date' => 'Date',
+    'select' => 'Dropdown',
+    'multiselect' => 'Multiple Select',
+    'file' => 'File',
+    'image' => 'Image',
+];
+
+$selectedInputType = $attribute->getData('frontend_input');
+$inputTypeHtml = '';
+foreach ($inputOptions as $value => $label) {
+    $selected = ($value === $selectedInputType) ? 'selected' : '';
+    $inputTypeHtml .= "<option value=\"$value\" $selected>$label</option>";
+}
+
+?>
+
+<?php
+$inputTypes = [
+    'text' => 'Text Field',
+            'textarea' => 'Text Area',
+            'date' => 'Date',
+            'dropdown' => 'Dropdown',
+            'file' => 'Single File Upload'
+];
+?>
+
+    <?php
+    // Map Magento frontend_input back to our custom input types
+    $customInputType = $this->mapMagentoInputTypeToCustom($frontendInput);
+    ?>
+    
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Customer Input Format</label>
+        <select name="catalog_input" id="catalog_input" style="width: 300px;">
+        <?php foreach ($inputTypes as $value => $label): ?>
+            <option value="<?= $value ?>" <?= $customInputType === $value ? 'selected' : '' ?>><?= $label ?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+
+    <?php
+    // Get existing dropdown options if this is a dropdown attribute
+    $dropdownOptionsText = '';
+    $isDropdownAttribute = ($frontendInput === 'dropdown' || $frontendInput === 'select') && $attribute;
+    if ($isDropdownAttribute) {
+        $options = $attribute->getSource()->getAllOptions();
+        $optionLabels = [];
+        foreach ($options as $option) {
+            if (!empty($option['label']) && $option['value'] !== '') {
+                $optionLabels[] = $option['label'];
+            }
+        }
+        $dropdownOptionsText = implode("\n", $optionLabels);
+    }
+    ?>
+
+    <div style="margin-bottom: 10px; display: flex;" id="dropdown_options_container" <?= $isDropdownAttribute ? '' : 'style="display: none;"' ?>>
+        <label style="width: 250px;">Dropdown Options <span style="color: red;">*</span></label>
+        <div style="width: 300px;">
+            <textarea name="dropdown_options" id="dropdown_options" placeholder="Enter options, one per line. Example:&#10;Option 1&#10;Option 2&#10;Option 3" rows="5" cols="50" style="width: 100%;"><?= htmlspecialchars($dropdownOptionsText) ?></textarea>
+            <small style="color: #666; display: block; margin-top: 5px;">Enter each option on a separate line. These will be the selectable options in the dropdown.</small>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Default Value</label>
+        <input type="text" name="default_value" id="default_value" style="width: 300px;" value="<?= $attribute ? htmlspecialchars($attribute->getDefaultValue()) : '' ?>" />
+    </div>
+
+    <?php $isRequired = $attribute->getData('is_required'); ?>
+
+    <div style="margin-bottom: 20px; display: flex;">
+        <label style="width: 250px;">Required Input</label>
+        <select name="values_required" id="values_required" style="width: 300px;">
+            <option value="1" <?= $isRequired === "1" ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= $isRequired === "0" ? 'selected' : '' ?>>No</option>
+        </select>
+    </div>
+
+    <h4>Storefront & Form Configuration</h4><hr><br>
+
+    <?php $isVisible = $attribute->getIsVisible(); ?>
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Display on Frontend</label>
+        <select name="is_visible" id="is_visible" style="width: 70px;">
+            <option value="1" <?= $isVisible == "1" ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= $isVisible == "0" ? 'selected' : '' ?>>No</option>
+    </select>
+    </div>
+
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Include in These Forms</label>
+        <select id="used_in_forms" name="used_in_forms[]" size="5" multiple="multiple" style="width: 300px;">
+            <option value="customer_account_create" <?= in_array('customer_account_create', $usedInForms) ? 'selected' : '' ?>>Customer Registration</option>
+            <option value="customer_account_edit" <?= in_array('customer_account_edit', $usedInForms) ? 'selected' : '' ?>>Customer Account Edit</option>
+        </select>
+    </div>
+
+
+    <div style="margin-bottom: 10px; display: flex;">
+        <label style="width: 250px;">Display Order</label>
+        <input type="text" id="sorting_order" style="width: 300px;" value="<?= $attribute ? $attribute->getData('sort_order') : '' ?>" />
+    </div>
+</div>

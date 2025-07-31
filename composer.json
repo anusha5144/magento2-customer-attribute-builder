@@ -1,0 +1,40 @@
+{
+    "name": "miniorange_inc/CustomerAttributeBuilder",
+    "description": "Magento CustomerAttributeBuilder extension allows you to create custom attributes for your customers. You can create attributes for your customers and use them in your Magento store. You can also use these attributes in your Magento store.",
+    "keywords": [
+      "Customer Attribute Builder",
+      "Customer Attribute",
+      "Customer Attribute Builder Magento",
+      "Custom Attributes",
+      "Customer Custom Attributes",
+      "Customer Custom Attributes Magento 2"
+    ],
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+      "Commercial"
+    ],
+    "autoload": {
+      "files": [
+        "registration.php"
+      ],
+      "psr-4": {
+        "MiniOrange\\CustomerAttributeBuilder\\": ""
+      }
+    },
+    "authors": [
+      {
+        "name": "miniOrange Team",
+        "homepage": "https://www.miniorange.com/",
+        "email": "magentosupport@xecurify.com"
+      }
+    ],
+    "support": {
+      "email": "magentosupport@xecurify.com"
+    },
+    "require": {
+      "php": "~8"
+    }
+  
+  }
+  

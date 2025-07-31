@@ -1,0 +1,33 @@
+/* Target the main menu item for Customer Attribute Builder */
+.admin__menu [id*="miniorange_customerattributebuilder"] > a:before,
+.admin__menu [id*="customerattributebuilder"] > a:before { /* Target any menu item containing these identifiers */
+    content: url('../images/mo.png') !important;
+    display: block !important; /* Ensures that margin-bottom works properly */
+    width: 50px !important;
+    height: 42px !important;
+    margin: 0 auto 5px auto !important; /* Center horizontally and add space below */
+    text-transform: none !important;
+    color: #b9944c !important;
+    text-decoration: underline !important;
+    text-decoration: solid !important;
+    font-weight: bold !important;
+    text-transform: none !important;
+}
+
+.admin__menu [id*="miniorange_customerattributebuilder"] > a,
+.admin__menu [id*="customerattributebuilder"] > a {
+    color: #eca311 !important;
+    font-weight: bold !important;
+    text-transform: none !important; /* Ensure the text isn't capitalized */
+}
+
+/* Alternative selectors for debugging */
+.admin__menu .item-customer-attributes-builder > a:before,
+.admin__menu .item-customer-attributes-builder.parent > a:before {
+    content: url('../images/miniorange.png') !important;
+    display: block !important;
+    width: 50px !important;
+    height: 42px !important;
+    margin: 0 auto 5px auto !important;
+}
+

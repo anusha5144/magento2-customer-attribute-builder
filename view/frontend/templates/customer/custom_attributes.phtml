@@ -1,0 +1,82 @@
+<?php 
+foreach ($block->getCustomAttributes() as $attribute): 
+    if (!empty($attribute['is_visible']) && $attribute['is_visible'] === "1" && 
+        (empty($attribute['store_id']) || $attribute['store_id'] == $block->getStoreId())):
+?>
+    <div class="field <?= $block->escapeHtml($attribute['attribute_code']) ?>">
+        <label for="<?= $block->escapeHtml($attribute['attribute_code']) ?>" class="label">
+            <span>
+                <?= $block->escapeHtml($attribute['label']) ?>
+            </span>
+            <?php if (!empty($attribute['is_required'])): ?>
+                <span class="required" style="color: #e02b27; font-size: 1.2rem; margin: 0 0 0 5px;">*</span>
+            <?php endif; ?>
+        </label>
+        <div class="control">
+            <?php
+            $attrName = $block->escapeHtml($attribute['attribute_code']);
+            $inputType = $attribute['frontend_input'];
+            $defaultValue = $attribute['default_value'] ?? '';
+            $validationClass = '';
+
+            if (!empty($attribute['input_validation'])) {
+                $validationClass = 'validate-' . $block->escapeHtml($attribute['input_validation']);
+            }
+            ?>
+
+            <?php if ($inputType === 'text'): ?>
+                <input type="text"
+                    name="<?= $block->escapeHtml($attrName) ?>"
+                    id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                    value="<?= $block->escapeHtml($defaultValue) ?>"
+                    class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>" />
+
+            <?php elseif ($inputType === 'textarea'): ?>
+                <textarea name="<?= $block->escapeHtml($attrName) ?>"
+                        id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                        class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>"><?= $block->escapeHtml($defaultValue) ?></textarea>
+
+            <?php elseif ($inputType === 'date'): ?>
+                <input type="date"
+                    name="<?= $block->escapeHtml($attrName) ?>"
+                    id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                    value="<?= $block->escapeHtml($defaultValue) ?>"
+                    class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>" />
+
+            <?php elseif ($inputType === 'dropdown' || $inputType === 'select'): ?>
+                <select name="<?= $block->escapeHtml($attrName) ?>"
+                        id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                        class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>">
+                    <?php foreach ($attribute['options'] as $option): ?>
+                        <option value="<?= $block->escapeHtml($option['value']) ?>"
+                            <?= $defaultValue == $option['value'] ? 'selected' : '' ?>>
+                            <?= $block->escapeHtml($option['label']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+            <?php elseif ($inputType === 'yesno'): ?>
+                <select name="<?= $block->escapeHtml($attrName) ?>"
+                        id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                        class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>">
+                    <option value="1" <?= $defaultValue == '1' ? 'selected' : '' ?>>Yes</option>
+                    <option value="0" <?= $defaultValue == '0' ? 'selected' : '' ?>>No</option>
+                </select>
+
+            <?php elseif ($inputType === 'file'): ?>
+                <input type="file"
+                    name="<?= $block->escapeHtml($attrName) ?>"
+                    id="<?= $block->escapeHtml($attribute['attribute_code']) ?>"
+                    class="<?= $validationClass ?> <?= !empty($attribute['is_required']) ? 'required-entry' : '' ?>" />
+                <?php if (!empty($defaultValue)): ?>
+                    <div class="uploaded-file">
+                        <a href="<?= $block->escapeHtml($defaultValue) ?>" target="_blank">Download Uploaded File</a>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php 
+    endif;
+endforeach;
+?>

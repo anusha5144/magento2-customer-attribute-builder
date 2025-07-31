@@ -1,0 +1,213 @@
+/* customer custom attribute creation form css */
+
+.attribute-actions {
+    display: flex;
+    align-items: center;
+    margin-left: -350px;
+    margin-bottom: 20px;
+    gap: 35px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.attribute-back-link {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    margin-left: 780px;
+    display: flex;
+    align-items: center;
+}
+
+.attribute-back-link svg {
+    margin-right: 5px;
+}
+
+#add-attribute-form {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-left: -350px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+#add-attribute-form h4 {
+    margin-bottom: 10px;
+}
+
+#add-attribute-form hr {
+    margin: 10px 0;
+}
+
+.form-row {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.form-row label {
+    width: 250px;
+}
+
+.form-row input[type="text"],
+.form-row select {
+    width: 300px;
+}
+
+#is_visible {
+    width: 70px !important;
+}
+
+#used_in_forms {
+    width: 300px;
+}
+
+.required-asterisk {
+    color: red;
+} 
+
+/* Dropdown options styling */
+#dropdown_options_container {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#dropdown_options_container label {
+    width: 250px;
+}
+
+#dropdown_options_container textarea {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+#dropdown_options_container small {
+    color: #666;
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+/* customer attribute custom table css */
+
+.page-title {
+    font-size: 24px;
+}
+
+.page-main-actions {
+    margin-bottom: 10px;
+}
+
+.page-actions {
+    margin-bottom: 5px;
+}
+
+.page-actions .action-primary {
+    cursor: pointer;
+}
+
+.filters-pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+}
+
+.filters-left button {
+    margin-left: -10px;
+    padding: 6px 14px;
+}
+
+.filters-left {
+    gap: 14px;
+}
+
+
+.filters-left .reset-filters-btn {
+    margin-left: 5px;
+    padding: 6px 0;
+    background: none;
+    border: none;
+    color: rgba(33, 72, 248, 0.93);
+    cursor: pointer;
+}
+
+.record-count {
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-controls select {
+    width: 70px;
+    margin-right: 8px;
+}
+
+.pagination-controls label {
+    margin-right: 30px;
+}
+
+.page-nav-btn {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.current-page {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-weight: 500;
+}
+
+.data-grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-grid th, .data-grid td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-grid .filter-row input,
+.data-grid .filter-row select {
+    width: 95%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.data-grid .clickable-row:hover {
+    background-color: #f0f8ff;
+    cursor: pointer;
+}
+
+.action-edit {
+    background: none;
+    border: none;
+    color: rgba(33, 72, 248, 0.93);
+    padding: 6px 0;
+    cursor: pointer;
+}
+
+.pagination-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.page-btn {
+    margin: 0 2px;
+    padding: 4px 8px;
+    cursor: pointer;
+}

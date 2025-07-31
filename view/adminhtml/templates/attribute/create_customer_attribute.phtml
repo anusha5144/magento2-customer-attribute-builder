@@ -1,0 +1,101 @@
+<?php
+/** @var \MiniOrange\CustomerAttributes\Block\Adminhtml\Edit $block */
+
+$newAttributeUrl = $block->getNewAttributeUrl();
+$storeOptions = $block->getStoreOptionsHtml();
+$inputTypeHtml = $block->getInputTypeHtml();
+
+$backUrl = $block->getUrl('customerattribute/attribute/index');
+$deleteUrl = $block->getUrl('customerattribute/attribute/customerattributedeletionhandler'); // You should create a Delete controller to handle this
+?>
+
+
+<div class="attribute-actions">
+    <a href="<?= $backUrl ?>" style="font-weight: bold; text-decoration: none; color: #000; margin-left: 780px; display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+            style="margin-right:5px; transform: rotate(180deg);" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M5.854 3.646a.5.5 0 0 0-.708.708L8.293 7H1.5a.5.5 0 0 0 0 1h6.793l-3.147 2.646a.5.5 0 0 0 .708.708l4-3.5a.5.5 0 0 0 0-.708l-4-3.5z"/>
+        </svg>
+        Back
+    </a>
+    <button type="button" class="action-primary" id="reset_form">Reset</button>
+    <button id="submit_attribute" class="action-primary"
+        data-save-url="<?= $block->getUrl('customerattribute/attribute/customerattributesavehandler') ?>"
+        data-fetch-url="<?= $block->getUrl('customerattribute/attribute/customerattributefetchhandler') ?>"
+        data-redirect-url="<?= $block->getUrl('customerattribute/attribute/index') ?>">
+        Save
+    </button>
+</div>
+
+<div id="add-attribute-form">
+    <input type="hidden" name="form_key" id="form_key" value="<?= $block->getFormKey() ?>" />
+    <h4>General Attribute Information</h4>
+    <hr><br>
+
+    <div class="form-row">
+        <label for="default_label">Attribute Label <span class="required-asterisk">*</span></label>
+        <input type="text" id="default_label" name="default_label" />
+    </div>
+
+    <div class="form-row">
+        <label for="attribute_code">Attribute Code <span class="required-asterisk">*</span></label>
+        <input type="text" id="attribute_code" name="attribute_code" />
+    </div>
+
+    <div class="form-row">
+        <label for="store_view">Select Applicable Store Views <span class="required-asterisk">*</span></label>
+        <select id="store_view" name="store_view">
+            <?= $storeOptions ?>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="catalog_input">Customer Input Format</label>
+        <select id="catalog_input" name="catalog_input">
+            <?= $inputTypeHtml ?>
+        </select>
+    </div>
+
+    <div class="form-row" id="dropdown_options_container" style="display: none;">
+        <label for="dropdown_options">Dropdown Options <span class="required-asterisk">*</span></label>
+        <textarea id="dropdown_options" name="dropdown_options" placeholder="Enter options, one per line. Example:&#10;Option 1&#10;Option 2&#10;Option 3" rows="5" cols="50"></textarea>
+        <small style="color: #666; display: block; margin-top: 5px;">Enter each option on a separate line. These will be the selectable options in the dropdown.</small>
+    </div>
+
+    <div class="form-row">
+        <label for="default_value">Default Value</label>
+        <input type="text" id="default_value" name="default_value" />
+    </div>
+
+    <div class="form-row">
+        <label for="values_required">Required Input</label>
+        <select id="values_required" name="values_required">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    </div>
+
+    <h4>Storefront & Form Configuration</h4>
+    <hr><br>
+
+    <div class="form-row">
+        <label for="is_visible">Display on Frontend</label>
+        <select id="is_visible" name="is_visible" class="small-select">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="used_in_forms">Include in These Forms</label>
+        <select id="used_in_forms" name="used_in_forms[]" size="5" multiple="multiple">
+            <option value="customer_account_create">Customer Registration</option>
+            <option value="customer_account_edit">Customer Account Edit</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="sorting_order">Display Order</label>
+        <input type="text" id="sorting_order" name="sorting_order" />
+    </div>
+</div>
